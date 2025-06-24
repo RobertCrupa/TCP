@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-tun-tap = "0.1.2"
+tun = "0.8.2"
 etherparse = "0.8"
 bitflags = "1.0"
 nix = "0.13"
