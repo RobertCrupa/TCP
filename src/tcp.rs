@@ -18,8 +18,8 @@ impl State {
             ip_hdr.source_addr(),
             tcp_hdr.source_port(),
             ip_hdr.destination_addr(),
-            tcp_hdr.destination_port()
-            tcp_hdr.slice().len(),
+            tcp_hdr.destination_port(),
+            data.len()
         );
     }
 }

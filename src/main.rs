@@ -38,11 +38,11 @@ fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync + 'static>> {
         
         // Process the IPv4 packet
         if let Ok(ip_hdr) = etherparse::Ipv4HeaderSlice::from_slice(&buff[..read]) {
-            let source = ip_hdr.source_addr();
+            let source = ip_hdr.source_addr(); 
             let dest = ip_hdr.destination_addr();
 
             // Process TCP packets
-            if let Ok(tcp_hdr) = etherparse::TcpHeaderSlice::from_slice(&buff[ip_hdr.slice().len()..]) {
+            if let Ok(tcp_hdr) = etherparse::TcpHeaderSlice::from_slice(&buff[ip_hdr.slice().len()..read]) {
                 let src_port = tcp_hdr.source_port();
                 let dest_port = tcp_hdr.destination_port();
                 let header_size = ip_hdr.slice().len() + tcp_hdr.slice().len();
@@ -50,7 +50,7 @@ fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync + 'static>> {
                 connections.entry(Quad {
                     src: (source, src_port),
                     dest: (dest, dest_port)
-                }).or_default().on_packet(ip_hdr, tcp_hdr, &buff[header_size..]);
+                }).or_default().on_packet(ip_hdr, tcp_hdr, &buff[header_size..read]);
 
             }
         }
